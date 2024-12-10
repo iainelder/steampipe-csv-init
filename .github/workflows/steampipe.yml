@@ -23,30 +23,14 @@ jobs:
               paths = [ "*.csv" ]
             }
 
-      - name: Dump acme table (before plugin list)
-        run: steampipe query "SELECT * FROM acme;"
-
       - name: List tables in CSV schema (before plugin list)
-        run: |
-          steampipe query "
-            SELECT table_name
-            FROM information_schema.tables
-            WHERE table_schema = 'csv';
-          "
+        run: steampipe query list_tables_in_csv_schema.sql
 
       - name: List Steampipe plugins
         run: steampipe plugin list
 
-      - name: Dump acme table (after plugin list)
-        run: steampipe query "SELECT * FROM acme;"
-
       - name: List tables in CSV schema (after plugin list)
-        run: |
-          steampipe query "
-            SELECT table_name
-            FROM information_schema.tables
-            WHERE table_schema = 'csv';
-          "
+        run: steampipe query list_tables_in_csv_schema.sql
 
       - name: Upload Steampipe logs
         uses: actions/upload-artifact@v4
