@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Steampipe
-        uses: turbot/steampipe-action-setup@v1
+        uses: turbot/steampipe-action-setup@461ac105caef8afa827d9b6deb8899d966f948c9 # v.1.5.2
         with:
           plugin-connections: |
             connection "csv" {
@@ -42,7 +42,7 @@ jobs:
     steps:
 
       - name: Set up Steampipe without CSV paths
-        uses: turbot/steampipe-action-setup@v1
+        uses: turbot/steampipe-action-setup@461ac105caef8afa827d9b6deb8899d966f948c9 # v.1.5.2
         with:
           plugin-connections: |
             connection "csv" {
@@ -56,7 +56,7 @@ jobs:
         run: rm -rf /home/runner/.steampipe
 
       - name: Setup Steampipe with CSV paths
-        uses: turbot/steampipe-action-setup@v1
+        uses: turbot/steampipe-action-setup@461ac105caef8afa827d9b6deb8899d966f948c9 # v.1.5.2
         with:
           plugin-connections: |
             connection "csv" {
