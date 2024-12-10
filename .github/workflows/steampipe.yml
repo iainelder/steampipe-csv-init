@@ -32,16 +32,6 @@ jobs:
       - name: List tables in CSV schema (after plugin list)
         run: steampipe query list_tables_in_csv_schema.sql
 
-      - name: Upload Steampipe logs
-        uses: actions/upload-artifact@v4
-        with:
-          name: steampipe-logs
-          path: |
-            /home/runner/.steampipe/logs/
-            /home/runner/.steampipe/config/
-          retention-days: 1
-          include-hidden-files: true
-
   report-errors:
 
     env:
@@ -76,13 +66,3 @@ jobs:
 
       - name: List Steampipe plugins
         run: steampipe plugin list
-
-      - name: Upload Steampipe logs
-        uses: actions/upload-artifact@v4
-        with:
-          name: steampipe-logs
-          path: |
-            /home/runner/.steampipe/logs/
-            /home/runner/.steampipe/config/
-          retention-days: 1
-          include-hidden-files: true
