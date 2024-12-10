@@ -1,0 +1,59 @@
+on:
+  push:
+
+jobs:
+  steampipe-csv-init:
+
+    env:
+      STEAMPIPE_LOG_LEVEL: trace
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Setup Steampipe
+        uses: turbot/steampipe-action-setup@v1
+        with:
+          plugin-connections: |
+            connection "csv" {
+              plugin = "csv"
+              paths = [ "*.csv" ]
+            }
+
+      - name: Dump acme table (before plugin list)
+        run: steampipe query "SELECT * FROM acme;"
+
+      - name: List tables in CSV schema (before plugin list)
+        run: |
+          steampipe query "
+            SELECT table_name
+            FROM information_schema.tables
+            WHERE table_schema = 'csv';
+          "
+
+      - name: List Steampipe plugins
+        run: steampipe plugin list
+
+      - name: Dump acme table (after plugin list)
+        run: steampipe query "SELECT * FROM acme;"
+
+      - name: List tables in CSV schema (after plugin list)
+        run: |
+          steampipe query "
+            SELECT table_name
+            FROM information_schema.tables
+            WHERE table_schema = 'csv';
+          "
+
+      - name: Upload Steampipe logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: steampipe-logs
+          path: |
+            /home/runner/.steampipe/logs/
+            /home/runner/.steampipe/config/
+          retention-days: 1
+          include-hidden-files: true
