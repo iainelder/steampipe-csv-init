@@ -62,6 +62,9 @@ jobs:
       - name: List Steampipe plugins (shows CSV error)
         run: steampipe plugin list
 
+      - name: Delete previous installation
+        run: rm -rf /home/runner/.steampipe
+
       - name: Setup Steampipe with CSV paths
         uses: turbot/steampipe-action-setup@v1
         with:
